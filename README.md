@@ -1,236 +1,220 @@
-# Project_LLM
-A modular, step-by-step guide to deploying a fully isolated local AI environment. This project automates the setup of Ollama and Open WebUI using PowerShell, featuring custom storage paths for LLMs and a dedicated Python environment to ensure zero interference with your system's global settings.
+# Project_LLM — Local LLM Setup Guide (Windows 11 + PowerShell)
 
+A complete guide to set up a **local AI environment** using:
 
-# Project_LLM — Local LLM Setup Guide (Windows 11)
+* Ollama for running local LLMs
+* Local isolated Python environment
+* Open WebUI for browser-based chat UI
 
-A complete self-contained local AI setup using:
-
-* Ollama for running models locally
-* Python (isolated local install) for dependency management
-* Open WebUI for browser-based chat interface
-
-This repository is designed so **everything runs inside one project folder** without interfering with your device-wide Python setup.
+This project is designed so that **everything stays inside one folder** and **does not interfere with system Python or existing software**.
 
 ---
 
 # Project Goal
 
-This setup provides:
+This setup creates a fully isolated local AI workspace inside:
+
+```text id="zmg6sa"
+D:\Project_LLM\
+```
+
+Features:
 
 ✅ Local LLM execution
-✅ Isolated Python installation
-✅ Dedicated virtual environment
-✅ Self-hosted Web UI
+✅ Browser-based chat interface
+✅ Isolated Python environment
 ✅ Local model storage
-✅ Local application data storage
-✅ No dependency conflicts with system Python
-✅ Portable project structure
+✅ Dedicated application data storage
+✅ No system Python interference
+✅ Easy backup / move to another device
 
 ---
 
 # Complete Folder Structure
 
-```text id="wbdxdk"
+After completing setup:
+
+```text id="h96x2g"
 Project_LLM/
 │
-├── README.md                         # Main guide (this file)
+├── README.md
 │
-├── images/                           # Screenshots / output images
-│   ├── ollama_install.png
-│   ├── python_setup.png
-│   ├── openwebui_install.png
-│   ├── first_run.png
-│   └── ...
+├── ollama/
+│   └── README.md
 │
-├── docs/
-│   │
-│   ├── 01_ollama_setup.md            # Install Ollama + model storage setup
-│   ├── 02_python_setup.md            # Install isolated Python + create venv
-│   ├── 03_openwebui_setup.md         # Install Open WebUI + configure data dir
-│   ├── 04_first_run.md               # First launch + connect Ollama
-│   └── 05_features.md                # Open WebUI features walkthrough
+├── python/
+│   └── README.md
 │
-├── ollama_models/                    # Downloaded LLM models
+├── open-webui/
+│   └── README.md
+│
+├── first-run/
+│   └── README.md
+│
+├── ollama_models/
+│   ├── blobs/
+│   └── manifests/
 │
 ├── python/
 │   ├── installer/
 │   │   └── python311.exe
 │   │
-│   ├── python311/                    # Local isolated Python
+│   ├── python311/
 │   │   ├── python.exe
 │   │   └── ...
 │   │
-│   └── venv/                         # Virtual environment for Open WebUI
+│   └── venv/
 │       ├── Scripts/
 │       ├── Lib/
 │       └── ...
 │
-├── open-webui/                       # Open WebUI installation workspace
+├── open-webui/
+│   └── (Open WebUI files)
 │
-└── open-webui_data/                  # Open WebUI persistent data
+└── open-webui_data/
     ├── cache/
     ├── uploads/
-    ├── logs/
     ├── database/
-    └── ...
+    ├── logs/
+    └── settings/
 ```
 
 ---
 
-# Setup Flow
+# Setup Order
 
-Follow files in this order:
+Follow the documentation in this exact order.
+
+---
 
 ## Step 1 — Install Ollama
 
-Read:
+Documentation:
 
-```text id="x1c7t8"
-docs/01_ollama_setup.md
+```text id="9i2otq"
+./ollama/README.md
 ```
 
-This guide covers:
+This file covers:
 
 * installing Ollama
-* configuring:
+* setting model storage path
+* verifying installation
+* downloading first model
 
-```text id="n35x0w"
-D:\Project_LLM\ollama_models
+Output:
+
+```text id="0qtrqj"
+D:\Project_LLM\ollama_models\
 ```
 
-as model storage
-
-* verifying installation
-* downloading your first small LLM
+Models are stored here.
 
 ---
 
 ## Step 2 — Install Local Python
 
-Read:
+Documentation:
 
-```text id="r6rr26"
-docs/02_python_setup.md
+```text id="cq3l5p"
+./python/README.md
 ```
 
-This guide covers:
+This file covers:
 
-* downloading Python 3.11.x
-* installing it locally in:
+* downloading correct Python version
+* local isolated installation
+* creating virtual environment
+* verifying Python path
 
-```text id="e1h9p2"
-D:\Project_LLM\python\python311
+Output:
+
+```text id="h8qjlwm"
+D:\Project_LLM\python\
 ```
 
-* creating isolated virtual environment:
+This Python is dedicated only for Open WebUI.
 
-```text id="fh7o4f"
-D:\Project_LLM\python\venv
-```
-
-No changes are made to system Python.
+System Python remains untouched.
 
 ---
 
 ## Step 3 — Install Open WebUI
 
-Read:
+Documentation:
 
-```text id="ddsj5q"
-docs/03_openwebui_setup.md
+```text id="s9u3xq"
+./open-webui/README.md
 ```
 
-This guide covers:
+This file covers:
 
-Installing Open WebUI in:
+* activating virtual environment
+* installing Open WebUI
+* setting data directory
+* verifying installation
 
-```text id="af0r18"
-D:\Project_LLM\open-webui
+Output:
+
+Application files:
+
+```text id="7u0n0n"
+D:\Project_LLM\open-webui\
 ```
 
-Setting persistent data path:
+Data files:
 
-```text id="uj47mw"
-D:\Project_LLM\open-webui_data
+```text id="mce3q4"
+D:\Project_LLM\open-webui_data\
 ```
-
-This keeps:
-
-* chats
-* uploads
-* configs
-* database
-* logs
-
-inside the project.
 
 ---
 
 ## Step 4 — First Launch
 
-Read:
+Documentation:
 
-```text id="wv9i8d"
-docs/04_first_run.md
+```text id="fr1tm7"
+./first-run/README.md
 ```
 
-This guide will cover:
+This file covers:
 
-* starting Ollama server
-* starting Open WebUI
-* opening browser UI
-* creating admin account
-* connecting local models
+* starting Ollama service
+* launching Open WebUI
+* connecting models
+* creating account
 * first chat
+* available features
 
 ---
 
-## Step 5 — Features Walkthrough
+# How Components Connect
 
-Read:
+System flow:
 
-```text id="jlwmwv"
-docs/05_features.md
+```text id="rnzzcr"
+User Browser
+     ↓
+Open WebUI
+     ↓
+Local Python venv
+     ↓
+Ollama Engine
+     ↓
+LLM Model
 ```
 
-This guide will cover:
+Storage flow:
 
-* model switching
-* chats
-* file upload
-* prompt templates
-* settings
-* API integrations
-* advanced options
-
----
-
-# PowerShell Commands Quick Start
-
-Start Ollama:
-
-```powershell id="9ft4qh"
-ollama serve
+```text id="ck5vsa"
+Models  → D:\Project_LLM\ollama_models\
+Data    → D:\Project_LLM\open-webui_data\
+Python  → D:\Project_LLM\python\
+UI      → D:\Project_LLM\open-webui\
 ```
 
-Activate Python venv:
-
-```powershell id="m0f8h4"
-D:\Project_LLM\python\venv\Scripts\Activate.ps1
-```
-
-Run Open WebUI:
-
-```powershell id="m0j8o4"
-open-webui serve
-```
-
-Open browser:
-
-```text id="ax0r47"
-http://localhost:8080
-```
+Everything stays inside one workspace.
 
 ---
 
@@ -238,74 +222,95 @@ http://localhost:8080
 
 ## Ollama Models
 
-```text id="tmjlwm"
+```powershell id="8p7wnu"
 OLLAMA_MODELS=D:\Project_LLM\ollama_models
 ```
 
-Stores all downloaded models locally.
+Stores all models locally.
 
 ---
 
 ## Open WebUI Data
 
-```text id="u3r0fx"
+```powershell id="s1uh7t"
 DATA_DIR=D:\Project_LLM\open-webui_data
 ```
 
-Stores Open WebUI data locally.
+Stores:
+
+* chats
+* uploads
+* settings
+* cache
+* logs
+
+---
+
+# Daily Usage
+
+Start Ollama:
+
+```powershell id="3t6l9q"
+ollama serve
+```
+
+Activate Python:
+
+```powershell id="4dwnv8"
+D:\Project_LLM\python\venv\Scripts\Activate.ps1
+```
+
+Start Open WebUI:
+
+```powershell id="uqs4m5"
+open-webui serve
+```
+
+Open browser:
+
+```text id="jlwm08"
+http://localhost:8080
+```
+
+Start chatting with your local model.
 
 ---
 
 # Advantages of This Setup
 
-* Clean structure
-* Easy backup
-* Easy migration to another PC
-* No Python conflicts
-* No global package pollution
-* Dedicated LLM storage
-* Dedicated application storage
-* Fully local AI stack
+* portable
+* clean
+* isolated
+* organized
+* easy to backup
+* easy to migrate
+* safe for system Python
+* easy model management
 
 ---
 
-# Recommended Reading Order
+# Documentation Map
 
-Read in sequence:
-
-```text id="v78ud1"
-README.md
-↓
-docs/01_ollama_setup.md
-↓
-docs/02_python_setup.md
-↓
-docs/03_openwebui_setup.md
-↓
-docs/04_first_run.md
-↓
-docs/05_features.md
+```text id="i4uv3p"
+README.md                  → master guide
+ollama/README.md           → Ollama setup
+python/README.md           → Python setup
+open-webui/README.md       → Open WebUI setup
+first-run/README.md        → First launch guide
 ```
 
----
-
-# Platform
-
-Tested on:
-
-```text id="2x2scf"
-Windows 11 + PowerShell
-```
+Follow them in order.
 
 ---
 
 # Final Result
 
-After completing all guides, you will have a **fully self-hosted local AI environment** running entirely from:
+You get a complete local AI stack running on Windows:
 
-```text id="g58x7d"
-D:\Project_LLM
-```
-
-Portable, isolated, and ready for development.
-
+✅ Ollama engine
+✅ Local models
+✅ Isolated Python
+✅ Open WebUI
+✅ Local storage
+✅ Browser UI
+✅ No system interference
