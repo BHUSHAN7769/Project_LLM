@@ -1,24 +1,24 @@
-# Python Setup for Open WebUI (Isolated Local Installation)
+# Python Setup for Open WebUI (Windows 11 + PowerShell)
 
 This guide installs a **dedicated local copy of Python** inside `Project_LLM/python/` specifically for **Open WebUI**.
 
-This Python installation is **fully isolated** from your system Python.
+This installation is **fully isolated** from your system Python.
 
-That means:
+## Benefits
 
-✅ Does **not** modify existing Python on your PC
-✅ Does **not** affect PATH for device Python
-✅ Does **not** interfere with other Python projects
-✅ Used only for Open WebUI
-✅ Virtual environment created from this local Python only
+* Does **not** modify existing Python on your PC
+* Does **not** affect PATH for device Python
+* Does **not** interfere with other Python projects
+* Used only for Open WebUI
+* Virtual environment created from this local Python only
 
 ---
 
-# Folder Structure
+## Folder Structure
 
 After setup:
 
-```text id="9pt1kv"
+```text
 Project_LLM/
 │
 ├── ollama_models/
@@ -39,42 +39,37 @@ Where:
 
 ---
 
-# Why Python 3.11?
+## Why Python 3.11?
 
-Currently, **Open WebUI is most stable on Python 3.11.x**.
+**Open WebUI works most reliably on Python 3.11.x**
 
 Recommended version:
 
-```text id="zy3a13"
-Python 3.11.9
+```text
+Python 3.11.9 (64-bit)
 ```
 
 Reason:
 
 * Stable
 * Excellent package compatibility
-* Works well with pip installs
-* Avoids newer-version dependency conflicts
+* Avoids dependency issues seen in newer versions
 
 ---
 
-# Step 1 — Open PowerShell
+## Step 1 — Open PowerShell
 
-Open normal PowerShell:
+Open **Windows PowerShell**
 
-```text id="2ix94q"
-Windows PowerShell
-```
+Navigate to project folder:
 
-Go to project folder:
-
-```powershell id="hwp8c6"
+```powershell
 cd D:\Project_LLM
 ```
 
 Create Python folders:
 
-```powershell id="1sz8eh"
+```powershell
 mkdir python
 mkdir python\installer
 mkdir python\python311
@@ -83,11 +78,11 @@ mkdir python\venv
 
 ---
 
-# Step 2 — Download Python Installer
+## Step 2 — Download Python Installer
 
-Download **Python 3.11.9 (64-bit)** directly:
+Download **Python 3.11.9 (64-bit)**:
 
-```powershell id="kw3ek1"
+```powershell
 Invoke-WebRequest `
 -OutFile ".\python\installer\python311.exe" `
 -Uri "https://www.python.org/ftp/python/3.11.9/python-3.11.9-amd64.exe"
@@ -95,178 +90,150 @@ Invoke-WebRequest `
 
 Verify:
 
-```powershell id="4cq2o8"
+```powershell
 Get-ChildItem .\python\installer
 ```
 
-Expected:
+Expected output:
 
-```text id="8f7xzb"
+```text
 python311.exe
 ```
 
 ---
 
-# Step 3 — Install Python Locally
+## Step 3 — Install Python Locally
 
 Install only inside project folder:
 
-```powershell id="bq2upj"
+```powershell
 Start-Process `
 -Wait `
 -FilePath ".\python\installer\python311.exe" `
 -ArgumentList "/quiet InstallAllUsers=0 PrependPath=0 Include_test=0 TargetDir=D:\Project_LLM\python\python311"
 ```
 
-Explanation:
+### What this does
 
 * `InstallAllUsers=0` → current user only
-* `PrependPath=0` → does NOT change device PATH
+* `PrependPath=0` → does **not** modify system PATH
 * `TargetDir=...` → installs only inside project folder
 
-No system Python is touched.
+Your system Python remains untouched.
 
 ---
 
-# Step 4 — Verify Local Python
+## Step 4 — Verify Local Python
 
-Run:
+Check version:
 
-```powershell id="jlwm1q"
+```powershell
 D:\Project_LLM\python\python311\python.exe --version
 ```
 
 Expected:
 
-```text id="l8z9to"
+```text
 Python 3.11.9
 ```
 
 Check pip:
 
-```powershell id="trq3u2"
+```powershell
 D:\Project_LLM\python\python311\python.exe -m pip --version
 ```
 
-If pip works, installation is successful.
+If pip runs successfully, installation is correct.
 
 ---
 
-# Step 5 — Upgrade pip (Local Only)
+## Step 5 — Upgrade pip (Local Only)
 
-Upgrade pip for this isolated Python:
+Upgrade pip inside local Python:
 
-```powershell id="cf5k1u"
+```powershell
 D:\Project_LLM\python\python311\python.exe -m pip install --upgrade pip
 ```
 
-This upgrades pip only inside project Python.
-
-System Python remains unchanged.
+This only affects project Python.
 
 ---
 
-# Step 6 — Create Virtual Environment
+## Step 6 — Create Virtual Environment
 
 Create venv using local Python:
 
-```powershell id="w6vbyd"
+```powershell
 D:\Project_LLM\python\python311\python.exe -m venv D:\Project_LLM\python\venv
 ```
 
-This venv is tied only to local Python 3.11.
+This virtual environment is linked only to local Python 3.11.
 
 ---
 
-# Step 7 — Activate Virtual Environment
+## Step 7 — Activate Virtual Environment
 
 Activate:
 
-```powershell id="a7kwv4"
+```powershell
 D:\Project_LLM\python\venv\Scripts\Activate.ps1
 ```
 
-Terminal should become:
+Expected terminal:
 
-```text id="3mftr6"
+```text
 (venv) PS D:\Project_LLM>
 ```
 
 ---
 
-# Step 8 — Verify Active Python
+## Step 8 — Verify Active Python
 
-Check:
+Check version:
 
-```powershell id="0zb7vc"
+```powershell
 python --version
 ```
 
 Expected:
 
-```text id="6c0yfk"
+```text
 Python 3.11.9
 ```
 
-Check location:
+Check executable path:
 
-```powershell id="q4o4ch"
+```powershell
 Get-Command python
 ```
 
-Expected path:
+Expected:
 
-```text id="w8w3eo"
+```text
 D:\Project_LLM\python\venv\Scripts\python.exe
 ```
 
-This confirms venv uses local isolated Python.
+This confirms venv is using isolated project Python.
 
 ---
 
-# Step 9 — Deactivate (Optional)
+## Step 9 — Deactivate Virtual Environment
 
 When finished:
 
-```powershell id="q0k0a2"
+```powershell
 deactivate
 ```
 
 ---
 
-# Important Notes
-
-System Python:
-
-```text id="by7s2h"
-C:\Users\...\Python...
-```
-
-Project Python:
-
-```text id="01gs2r"
-D:\Project_LLM\python\python311\
-```
-
-Project venv:
-
-```text id="0n6xvx"
-D:\Project_LLM\python\venv\
-```
-
-These are separate.
-
-No interference happens.
-
----
-
-# Completed
+## Final Result
 
 You now have:
 
-✅ Local isolated Python 3.11.9
-✅ No PATH modification
+✅ Local Python 3.11.9 inside project folder
+✅ No system PATH changes
 ✅ No interference with device Python
-✅ Dedicated pip environment
+✅ Dedicated pip installation
 ✅ Dedicated virtual environment for Open WebUI
-✅ Clean project-contained setup
+✅ Fully self-contained Python setup
