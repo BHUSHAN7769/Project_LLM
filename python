@@ -1,0 +1,272 @@
+# Python Setup for Open WebUI (Isolated Local Installation)
+
+This guide installs a **dedicated local copy of Python** inside `Project_LLM/python/` specifically for **Open WebUI**.
+
+This Python installation is **fully isolated** from your system Python.
+
+That means:
+
+✅ Does **not** modify existing Python on your PC
+✅ Does **not** affect PATH for device Python
+✅ Does **not** interfere with other Python projects
+✅ Used only for Open WebUI
+✅ Virtual environment created from this local Python only
+
+---
+
+# Folder Structure
+
+After setup:
+
+```text id="9pt1kv"
+Project_LLM/
+│
+├── ollama_models/
+├── python/
+│   ├── installer/
+│   ├── python311/
+│   └── venv/
+│
+├── open-webui/
+└── ...
+```
+
+Where:
+
+* `installer/` → downloaded Python installer
+* `python311/` → local isolated Python installation
+* `venv/` → virtual environment used by Open WebUI
+
+---
+
+# Why Python 3.11?
+
+Currently, **Open WebUI is most stable on Python 3.11.x**.
+
+Recommended version:
+
+```text id="zy3a13"
+Python 3.11.9
+```
+
+Reason:
+
+* Stable
+* Excellent package compatibility
+* Works well with pip installs
+* Avoids newer-version dependency conflicts
+
+---
+
+# Step 1 — Open PowerShell
+
+Open normal PowerShell:
+
+```text id="2ix94q"
+Windows PowerShell
+```
+
+Go to project folder:
+
+```powershell id="hwp8c6"
+cd D:\Project_LLM
+```
+
+Create Python folders:
+
+```powershell id="1sz8eh"
+mkdir python
+mkdir python\installer
+mkdir python\python311
+mkdir python\venv
+```
+
+---
+
+# Step 2 — Download Python Installer
+
+Download **Python 3.11.9 (64-bit)** directly:
+
+```powershell id="kw3ek1"
+Invoke-WebRequest `
+-OutFile ".\python\installer\python311.exe" `
+-Uri "https://www.python.org/ftp/python/3.11.9/python-3.11.9-amd64.exe"
+```
+
+Verify:
+
+```powershell id="4cq2o8"
+Get-ChildItem .\python\installer
+```
+
+Expected:
+
+```text id="8f7xzb"
+python311.exe
+```
+
+---
+
+# Step 3 — Install Python Locally
+
+Install only inside project folder:
+
+```powershell id="bq2upj"
+Start-Process `
+-Wait `
+-FilePath ".\python\installer\python311.exe" `
+-ArgumentList "/quiet InstallAllUsers=0 PrependPath=0 Include_test=0 TargetDir=D:\Project_LLM\python\python311"
+```
+
+Explanation:
+
+* `InstallAllUsers=0` → current user only
+* `PrependPath=0` → does NOT change device PATH
+* `TargetDir=...` → installs only inside project folder
+
+No system Python is touched.
+
+---
+
+# Step 4 — Verify Local Python
+
+Run:
+
+```powershell id="jlwm1q"
+D:\Project_LLM\python\python311\python.exe --version
+```
+
+Expected:
+
+```text id="l8z9to"
+Python 3.11.9
+```
+
+Check pip:
+
+```powershell id="trq3u2"
+D:\Project_LLM\python\python311\python.exe -m pip --version
+```
+
+If pip works, installation is successful.
+
+---
+
+# Step 5 — Upgrade pip (Local Only)
+
+Upgrade pip for this isolated Python:
+
+```powershell id="cf5k1u"
+D:\Project_LLM\python\python311\python.exe -m pip install --upgrade pip
+```
+
+This upgrades pip only inside project Python.
+
+System Python remains unchanged.
+
+---
+
+# Step 6 — Create Virtual Environment
+
+Create venv using local Python:
+
+```powershell id="w6vbyd"
+D:\Project_LLM\python\python311\python.exe -m venv D:\Project_LLM\python\venv
+```
+
+This venv is tied only to local Python 3.11.
+
+---
+
+# Step 7 — Activate Virtual Environment
+
+Activate:
+
+```powershell id="a7kwv4"
+D:\Project_LLM\python\venv\Scripts\Activate.ps1
+```
+
+Terminal should become:
+
+```text id="3mftr6"
+(venv) PS D:\Project_LLM>
+```
+
+---
+
+# Step 8 — Verify Active Python
+
+Check:
+
+```powershell id="0zb7vc"
+python --version
+```
+
+Expected:
+
+```text id="6c0yfk"
+Python 3.11.9
+```
+
+Check location:
+
+```powershell id="q4o4ch"
+Get-Command python
+```
+
+Expected path:
+
+```text id="w8w3eo"
+D:\Project_LLM\python\venv\Scripts\python.exe
+```
+
+This confirms venv uses local isolated Python.
+
+---
+
+# Step 9 — Deactivate (Optional)
+
+When finished:
+
+```powershell id="q0k0a2"
+deactivate
+```
+
+---
+
+# Important Notes
+
+System Python:
+
+```text id="by7s2h"
+C:\Users\...\Python...
+```
+
+Project Python:
+
+```text id="01gs2r"
+D:\Project_LLM\python\python311\
+```
+
+Project venv:
+
+```text id="0n6xvx"
+D:\Project_LLM\python\venv\
+```
+
+These are separate.
+
+No interference happens.
+
+---
+
+# Completed
+
+You now have:
+
+✅ Local isolated Python 3.11.9
+✅ No PATH modification
+✅ No interference with device Python
+✅ Dedicated pip environment
+✅ Dedicated virtual environment for Open WebUI
+✅ Clean project-contained setup
